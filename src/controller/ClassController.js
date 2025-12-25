@@ -25,6 +25,17 @@ class ClassController {
             next(err);
         }
     }
+
+    async getAllClasses(req, res, next) {
+        try {
+            const result = await ClassService.getAllClasses();
+            return ApiResponse.success(res, result);
+        }
+        catch(err) {
+            next(err);
+        }
+    }
+
     async updateClass(req, res, next) {
         try {
             const classId = req.params.id;
@@ -100,6 +111,17 @@ class ClassController {
             }
             const updatedEForm = await EFormService.updateEFormStatus(student.studentId, "null", 0);
             return ApiResponse.success(res, updatedEForm);
+        }
+        catch(err) {
+            next(err);
+        }
+    }
+
+    async getClassByStudentId(req, res, next) {
+        try {
+            const studentId = req.body;
+            const classData = await EFormService.getEFormByStudentId(studentId);
+            return ApiResponse.success(res, classData);
         }
         catch(err) {
             next(err);
