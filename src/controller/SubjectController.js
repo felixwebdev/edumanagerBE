@@ -7,7 +7,7 @@ class SubjectController {
             const subjects = await SubjectService.getAllSubjects();
             return ApiResponse.success(res, subjects);
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }
@@ -17,7 +17,18 @@ class SubjectController {
             const newSubject = await SubjectService.createSubject(subjectData);
             return ApiResponse.success(res, newSubject);
         }
-        catch(err) {
+        catch (err) {
+            next(err);
+        }
+    }
+
+    async deleteSubject(req, res, next) {
+        try {
+            const subjectId = req.params.id;
+            await SubjectService.deleteSubject(subjectId);
+            return ApiResponse.success(res, { message: "Subject deleted successfully" });
+        }
+        catch (err) {
             next(err);
         }
     }

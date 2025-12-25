@@ -10,5 +10,6 @@ router.route("/")
     .post(verifyRole(ROLE.BGH, ROLE.CBHV), TeacherController.createTeacher)
     .get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), TeacherController.getAllTeachers);
 router.route("/:id")
-    .get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), TeacherController.getTeacherById);
+    .get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), TeacherController.getTeacherById)
+    .delete(verifyRole(ROLE.BGH, ROLE.CBHV), TeacherController.deleteTeacher);
 export default router;

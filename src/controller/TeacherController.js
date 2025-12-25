@@ -16,7 +16,7 @@ class TeacherController {
                 token: newUser.accessToken
             });
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }
@@ -26,7 +26,7 @@ class TeacherController {
             const teachers = await TeacherService.getAllTeachers();
             return ApiResponse.success(res, teachers);
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }
@@ -37,7 +37,7 @@ class TeacherController {
             const teacher = await TeacherService.getTeacherById(teacherId);
             return ApiResponse.success(res, teacher);
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }
@@ -52,7 +52,18 @@ class TeacherController {
             const assignments = await TAService.getTeachingAssignmentsByTeacher(user.userId);
             return ApiResponse.success(res, assignments);
         }
-        catch(err) {
+        catch (err) {
+            next(err);
+        }
+    }
+
+    async deleteTeacher(req, res, next) {
+        try {
+            const teacherId = req.params.id;
+            await TeacherService.deleteTeacher(teacherId);
+            return ApiResponse.success(res, { message: "Teacher deleted successfully" });
+        }
+        catch (err) {
             next(err);
         }
     }

@@ -1,5 +1,6 @@
 import ClassService from "../service/ClassService.js";
 import Student from "../model/Student.js";
+import EFormService from "../service/EFormService.js";
 import ApiResponse from "../utils/ApiResponse.js";
 
 class ClassController {
@@ -8,8 +9,8 @@ class ClassController {
             const classData = req.body;
             const newClass = await ClassService.createClass(classData);
             return ApiResponse.success(res, newClass);
-        }  
-        catch(err) {
+        }
+        catch (err) {
             next(err);
         }
     }
@@ -20,7 +21,7 @@ class ClassController {
             const classDetails = await ClassService.getClassById(classId);
             return ApiResponse.success(res, classDetails);
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }
@@ -31,7 +32,7 @@ class ClassController {
             const updatedClass = await ClassService.updateClass(classId, updateData);
             return ApiResponse.success(res, updatedClass);
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }
@@ -42,7 +43,7 @@ class ClassController {
             const students = await ClassService.getStudentsByClassId(classId);
             return ApiResponse.success(res, students);
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }
@@ -55,10 +56,17 @@ class ClassController {
             if (!classData) {
                 return ApiResponse.error(res, "Class not found", 404);
             }
+
+            // Check capacity
+            const currentStudents = await ClassService.getStudentsByClassId(classId);
+            if (currentStudents.length >= classData.quantity) {
+                return ApiResponse.error(res, "Class is full", 400);
+            }
+
             const updatedEForm = await EFormService.updateEFormStatus(studentId, classId, 1);
             return ApiResponse.success(res, updatedEForm);
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }
@@ -68,7 +76,7 @@ class ClassController {
             const classesWithTeachers = await ClassService.getAllClassesWithTeachers();
             return ApiResponse.success(res, classesWithTeachers);
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }
@@ -79,7 +87,7 @@ class ClassController {
             await ClassService.deleteClass(classId);
             return ApiResponse.success(res, { message: "Class deleted successfully" });
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }
@@ -96,7 +104,7 @@ class ClassController {
             const updatedEForm = await EFormService.updateEFormStatus(student.studentId, "null", 0);
             return ApiResponse.success(res, updatedEForm);
         }
-        catch(err) {
+        catch (err) {
             next(err);
         }
     }

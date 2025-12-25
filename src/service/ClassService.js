@@ -31,7 +31,7 @@ class ClassService {
             homeRoomTeacher: homeRoomTeacher
         };
         return classWithTeacher;
-    }  
+    }
 
     async getAllClassesWithTeachers() {
         const classes = await Class.find();
@@ -46,11 +46,13 @@ class ClassService {
     }
 
     async getStudentsByClassId(classId) {
-        const studentIdList = await EnrollmentForm.find({ classId: classId, status: 1 }, 'studentId');
+        const studentIdList = await EnrollmentForm.find({ classId: classId, status: "1" }, 'studentId');
         let students = [];
         for (const studentEntry of studentIdList) {
-            const studentData = await Student.find({studentId: studentEntry.studentId});
-            students.push(studentData);
+            const studentData = await Student.findOne({ studentId: studentEntry.studentId });
+            if (studentData) {
+                students.push(studentData);
+            }
         }
         return students;
     }

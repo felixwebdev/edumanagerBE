@@ -14,6 +14,10 @@ class TeacherService {
     async getTeacherById(id) {
         return await Teacher.findById(id);
     }
+
+    async deleteTeacher(id) {
+        return await Teacher.findByIdAndDelete(id);
+    }
 };
 
 export default new TeacherService();

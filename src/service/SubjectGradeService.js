@@ -8,7 +8,9 @@ class SubjectGradeService {
         const subject = await Subject.findById(gradeData.subjectId);
         const newGrade = new SubjectGrade(gradeData);
         newGrade.studentName = student.fullname;
+        newGrade.studentId = student.studentId;
         newGrade.subjectName = subject.name;
+        newGrade.subjectId = subject.subjectId;
         newGrade.teacherId = teacherId;
         await newGrade.save();
         return newGrade;
@@ -19,7 +21,7 @@ class SubjectGradeService {
     }
 
     async getGradesSaved(teacherId) {
-        return await SubjectGrade.find({teacherId: teacherId});
+        return await SubjectGrade.find({ teacherId: teacherId });
     }
 
     async updateSubjectGrade(gradeId, updateData) {

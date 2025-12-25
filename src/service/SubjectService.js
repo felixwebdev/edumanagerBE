@@ -10,5 +10,9 @@ class SubjectService {
         await newSubject.save();
         return newSubject;
     }
+
+    async deleteSubject(id) {
+        return await Subject.findByIdAndDelete(id);
+    }
 }
 export default new SubjectService();

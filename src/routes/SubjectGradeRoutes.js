@@ -13,4 +13,7 @@ router.route('/:id')
     .put(verifyRole(ROLE.GVBM, ROLE.CBHV, ROLE.BGH, ROLE.GVCN), SubjectGradeController.updateSubjectGrade)
     .delete(verifyRole(ROLE.BGH), SubjectGradeController.deleteSubjectGrade);
 
+router.route('/student/:studentId')
+    .get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), SubjectGradeController.getGradesByStudentId);
+
 export default router;
