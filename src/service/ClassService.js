@@ -45,6 +45,11 @@ class ClassService {
         return classesWithTeachers;
     }
 
+    async getClassWithTeacher(teacherId) {
+        const classInfo = Class.find({ homeroomTeacher: teacherId });
+        return classInfo;
+    }
+
     async getStudentsByClassId(classId) {
         const studentIdList = await EnrollmentForm.find({ classId: classId, status: "1" }, 'studentId');
         let students = [];

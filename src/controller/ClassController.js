@@ -1,6 +1,7 @@
 import ClassService from "../service/ClassService.js";
 import Student from "../model/Student.js";
 import EFormService from "../service/EFormService.js";
+import User from "../model/User.js";
 import ApiResponse from "../utils/ApiResponse.js";
 
 class ClassController {
@@ -75,6 +76,20 @@ class ClassController {
         try {
             const classesWithTeachers = await ClassService.getAllClassesWithTeachers();
             return ApiResponse.success(res, classesWithTeachers);
+        }
+        catch (err) {
+            next(err);
+        }
+    }
+
+    async getClassWithTeacher(req, res, next) {
+        try {
+            const userId = req.user.id;
+            const user = await User.findById(userId);
+            const teacherId = user.userId;
+            console.log(teacherId);
+            const classWithTeacher = await ClassService.getClassWithTeacher(teacherId);
+            return ApiResponse.success(res, classWithTeacher);
         }
         catch (err) {
             next(err);
