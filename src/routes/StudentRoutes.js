@@ -10,6 +10,7 @@ router.route("/myInfo").get(verifyRole(ROLE.HOCSINH), StudentController.getMyInf
 router.route("/subject-grades").get(verifyRole(ROLE.HOCSINH), StudentController.getSubjectGrades);
 router.route("/waiting").get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), StudentController.getStudentWaitingList);
 router.route("/changeClass/:id").post(verifyRole(ROLE.CBHV, ROLE.BGH), StudentController.changeClassForStudent);
+router.route("/class/:classId").get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), StudentController.getStudentsByClass);
 router.route("/").get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), StudentController.getAllStudents);
 router.route("/:id")
     .get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), StudentController.getStudentById)

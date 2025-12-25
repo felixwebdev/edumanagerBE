@@ -149,6 +149,17 @@ class StudentController {
             next(err)
         }
     }
+
+    async getStudentsByClass(req, res, next) {
+        try {
+            const classId = req.params.classId;
+            const students = await StudentService.getStudentsByClass(classId);
+            return ApiResponse.success(res, students);
+        }
+        catch(err) {
+            next(err);
+        }
+    }
 }
 
 export default new StudentController();
