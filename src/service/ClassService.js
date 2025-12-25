@@ -25,24 +25,16 @@ class ClassService {
 
     async getClassById(classId) {
         const classInfo = await Class.findById(classId);
-        const homeRoomTeacher = await Teacher.findById(classInfo.homeRoomTeacherId);
+        const homeRoomTeacher = await Teacher.findById(classInfo.homeroomTeacher);
         const classWithTeacher = {
             ...classInfo.toObject(),
-            homeRoomTeacher: homeRoomTeacher
+            homeroomTeacher: homeRoomTeacher
         };
         return classWithTeacher;
     }
 
     async getAllClassesWithTeachers() {
-        const classes = await Class.find();
-        const classesWithTeachers = await Promise.all(classes.map(async (classInfo) => {
-            const homeRoomTeacher = await Teacher.findById(classInfo.homeRoomTeacherId);
-            return {
-                ...classInfo.toObject(),
-                homeRoomTeacher: homeRoomTeacher
-            };
-        }));
-        return classesWithTeachers;
+        return await Class.find();
     }
 
     async getClassWithTeacher(teacherId) {
