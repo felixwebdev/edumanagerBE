@@ -10,11 +10,11 @@ router.route("/removeStudent/:id").put(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBH
 router.route("/students/:id").get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), ClassController.getStudentsByClassId);
 router.route("/:id/students").get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), ClassController.getStudentsByClassId);
 router.route("/class-teacher").get(verifyRole(ROLE.GVCN), ClassController.getClassWithTeacher);
+router.route("/getclassbystudentid").get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), ClassController.getClassByStudentId);
 
 router.route("/")
     .post(verifyRole(ROLE.CBHV, ROLE.BGH), ClassController.createClass)
     .get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), ClassController.getAllClassesWithTeachers);
-
 router.route("/:id")
     .get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), ClassController.getClassById)
     .put(verifyRole(ROLE.CBHV, ROLE.BGH), ClassController.updateClass)
