@@ -5,27 +5,26 @@ import User from "../model/User.js";
 class UserController {
     async register(req, res, next) {
         try {
-            const {username, password} = req.body;
+            const { username, password } = req.body;
 
             const result = await UserService.register(username, password);
             return ApiResponse.success(res, result.accessToken);
-        }
-        catch(err) {
+        } catch (err) {
             next(err);
         }
     }
 
     async login(req, res, next) {
         try {
-            const {username, password} = req.body;
+            const { username, password } = req.body;
             const result = await UserService.login(username, password);
 
             return ApiResponse.success(res, {
                 accessToken: result.accessToken,
-                role: result.role
+                role: result.role,
+                fullname: result.fullname,
             });
-        }
-        catch(err) {
+        } catch (err) {
             next(err);
         }
     }
