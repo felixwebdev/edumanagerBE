@@ -6,13 +6,15 @@ class StudentService {
         // Fetch all students
         const students = await Student.find({}, null, { sort: { studentId: 1 } }).lean();
 
-        // Fetch active enrollments (status "1")
-        const activeEnrollments = await EnrollmentForm.find({ status: "1" });
+        // Fetch active enrollments (status "1" or 1)
+        const activeEnrollments = await EnrollmentForm.find({ status: { $in: ["1", 1] } }).lean();
 
         // Map studentId to className for quick lookup
         const enrollmentMap = {};
         activeEnrollments.forEach(e => {
-            enrollmentMap[e.studentId] = e.className;
+            if (e.classId && e.classId !== "null") {
+                enrollmentMap[e.studentId] = e.className;
+            }
         });
 
         // Merge class info into student data
