@@ -8,6 +8,7 @@ const router = express.Router();
 router.route("/addStudent/:id").put(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), ClassController.addStudentToClass);
 router.route("/removeStudent/:id").put(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), ClassController.deleteStudentFromClass);
 router.route("/students/:id").get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), ClassController.getStudentsByClassId);
+router.route("/class-teacher").get(verifyRole(ROLE.GVCN, ROLE.GVBM), ClassController.getClassWithTeacher);
 router.route("/:id/students").get(verifyRole(ROLE.GVCN, ROLE.GVBM, ROLE.CBHV, ROLE.BGH), ClassController.getStudentsByClassId);
 router.route("/class-teacher").get(verifyRole(ROLE.GVCN), ClassController.getClassWithTeacher);
 
