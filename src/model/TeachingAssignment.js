@@ -6,7 +6,7 @@ const TeachingAssignmentSchema = new mongoose.Schema({
   subjectName: {type: String},
   class: {type: String, required: true},
   className: {type: String},
-  year: {type: Number, required: true},
+  year: {type: Number, required: true, default: new Date().getFullYear()},
 }, {timestamps: true});
 
 export default mongoose.model("TeachingAssignment", TeachingAssignmentSchema);
